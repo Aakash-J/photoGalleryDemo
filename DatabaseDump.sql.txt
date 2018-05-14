@@ -1,0 +1,142 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: www-db-staging.rit.edu
+-- Generation Time: May 14, 2018 at 03:06 PM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 5.6.36
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `w_cascade`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `AlbumImages`
+--
+
+CREATE TABLE `AlbumImages` (
+  `albumId` int(11) NOT NULL,
+  `photoId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `recordate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Albums`
+--
+
+CREATE TABLE `Albums` (
+  `albumId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `albumName` varchar(100) NOT NULL,
+  `recordDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_images`
+--
+
+CREATE TABLE `tbl_images` (
+  `photoId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `fileName` varchar(100) NOT NULL,
+  `recordDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `UserDetails`
+--
+
+CREATE TABLE `UserDetails` (
+  `userId` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `firstName` varchar(20) NOT NULL,
+  `lastName` varchar(20) NOT NULL,
+  `password` varchar(12) NOT NULL,
+  `recordDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `AlbumImages`
+--
+ALTER TABLE `AlbumImages`
+  ADD UNIQUE KEY `albumId_2` (`albumId`,`photoId`,`userId`,`recordate`),
+  ADD KEY `albumId` (`albumId`),
+  ADD KEY `photoId` (`photoId`),
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `Albums`
+--
+ALTER TABLE `Albums`
+  ADD PRIMARY KEY (`albumId`),
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `tbl_images`
+--
+ALTER TABLE `tbl_images`
+  ADD PRIMARY KEY (`photoId`);
+
+--
+-- Indexes for table `UserDetails`
+--
+ALTER TABLE `UserDetails`
+  ADD PRIMARY KEY (`userId`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Albums`
+--
+ALTER TABLE `Albums`
+  MODIFY `albumId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+--
+-- AUTO_INCREMENT for table `tbl_images`
+--
+ALTER TABLE `tbl_images`
+  MODIFY `photoId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=466;
+--
+-- AUTO_INCREMENT for table `UserDetails`
+--
+ALTER TABLE `UserDetails`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `AlbumImages`
+--
+ALTER TABLE `AlbumImages`
+  ADD CONSTRAINT `AlbumImages_ibfk_1` FOREIGN KEY (`albumId`) REFERENCES `Albums` (`albumId`),
+  ADD CONSTRAINT `AlbumImages_ibfk_2` FOREIGN KEY (`photoId`) REFERENCES `tbl_images` (`photoId`),
+  ADD CONSTRAINT `AlbumImages_ibfk_3` FOREIGN KEY (`userId`) REFERENCES `UserDetails` (`userId`);
+
+--
+-- Constraints for table `Albums`
+--
+ALTER TABLE `Albums`
+  ADD CONSTRAINT `Albums_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `UserDetails` (`userId`);
+
+[ Back ]
+
+Open new phpMyAdmin window
